@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}剧目类型列表{% endblock %}
+{% block bodytitle %}
+    <span class="glyphicon glyphicon-list">查看剧目类型</span>
+
+{% endblock %}
+{% block content %}
+{#                              <div class="">#}
+                                  <ul id="sortable" class="list-group">
+                                      {% for type in types %}
+                                      <li class="list-group-item">
+                                          <div class="task-title">
+                                              <span class="task-title-sp">{{ type.name }}</span>
+                                              <span class="badge bg-theme">Done</span>
+                                              <div class="pull-right">
+{#                                                  <button class="btn btn-success btn-xs fa fa-check"></button>#}
+                                                  <a href="{% url 'type_edit' type.id %}" class="btn btn-primary btn-xs">编辑</a>
+                                                  <a href="{% url 'type_delete' type.id%}" class="btn btn-danger btn-xs fa">删除</a>
+                                              </div>
+                                          </div>
+                                      </li>
+                                      {% endfor %}
+
+
+
+                                  </ul>
+                              </div>
+
+{% endblock %}
+{% block page %}
+        <div class="col-lg-offset-2">
+                        <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                      {% if typesPageObj.has_previous %}
+                    <li >
+                      <a href="{% url 'type_list' %}?page={{ typesPageObj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                      {% else %}
+                    <li class="disabled">
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                      {% endif %}
+
+                      {% for page in typesPageObj.paginator.page_range %}
+                          {% if page == typesPageObj.number %}
+                          <li class="active"><a href="{% url 'type_list' %}?page={{ page }}">{{ page}}</a></li>
+                          {% else %}
+                          <li><a href="{% url 'type_list' %}?page={{ page }}">{{ page}}</a></li>
+                          {% endif %}
+                      {% endfor %}
+
+                    {% if typesPageObj.has_next %}
+                    <li>
+                      <a href="{% url 'type_list' %}?page={{ typesPageObj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+
+        </div>
+{% endblock %}

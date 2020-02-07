@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}添加剧目{% endblock %}
+{% block bodytitle %}
+    <span class="glyphicon glyphicon-list">添加剧目</span>
+
+{% endblock %}
+{% block content %}
+    <hr>
+    <form class="form-horizontal style-form" method="post" action="{% url 'play_add' %}">
+
+
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">剧目名称</label>
+            <div class="col-sm-8">
+                <input type="text" name="name" class="form-control" placeholder="请输入演出厅名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">上映日期</label>
+            <div class="col-sm-8">
+                <input type="date" name="play_time">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">时长</label>
+            <div class="col-sm-8">
+                <input type="text" name="length" class="form-control round-form" placeholder="分钟">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">导演</label>
+            <div class="col-sm-8">
+                <input type="text" name="director" class="form-control round-form">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">主演</label>
+            <div class="col-sm-8">
+                <input type="text" name="actors" class="form-control round-form">
+                <span class="help-block">各个演员名字之间用","隔开</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">地区</label>
+            <div class="col-sm-8">
+                <input type="text" name="area" class="form-control round-form">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">剧目类型</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="types" multiple>
+                    {% for type in types %}
+                        {#                                            获取值#}
+                        {#                                          <option id="{{ type.id }}">{{ type.name }}</option>#}
+                        {#                                        获取id#}
+                        <option value="{{ type.id }}">{{ type.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile" class="col-sm-2 col-sm-2 control-label">图片</label>
+            <div class="col-sm-10">
+            <input type="file" name="img" accept="image/png,image/jpeg,image/gif"
+                   value="/home/kiosk/PycharmProjects/Project/Music/static/img/music/20190609_090701_IMG20190415134113.jpg">
+            <p class="help-block">只能选择.jpg/.png/.gif文件.</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">简介</label>
+            <div class="col-sm-10">
+                <textarea name="desc" rows="10" cols="70" class="vLargeTextField"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10 col-lg-offset-2">
+                <input class="btn btn-default" type="submit" value="添加剧目">
+            </div>
+
+        </div>
+
+
+    </form>
+
+    <!--main content end-->
+
+{% endblock %}

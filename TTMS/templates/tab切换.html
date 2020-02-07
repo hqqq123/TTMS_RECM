@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab切换练习</title>
+    <style>
+        .active{
+            color: orange;
+        }
+        span{
+            padding: 5px 20px;
+        }
+        .tab_con>div{
+            display: none;
+        }
+        .tab_con>div.show{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="tabs">
+        <span class="active" id="movie">电影</span>
+        <span id="tv">电视</span>
+        <span id="zy">综艺</span>
+
+    </div>
+    <div class="tab_con">
+        <div class="show movie">电影内容</div>
+        <div class="tv">电视内容</div>
+        <div class="zy">综艺内容</div>
+
+    </div>
+</div>
+</body>
+<script src="jquery-1.7.2.min.js"></script>
+<script>
+    $(".tabs span").mouseenter(function () {
+        $(this).addClass('active').siblings().removeClass('active')
+
+        var id =$(this).attr('id');
+        $('.tab_con>div').each(function (i) {
+            if($(this).attr('class').indexOf(id)!=-1){
+                $(this).addClass('show').siblings().removeClass('show')
+            }
+
+         })
+    })
+</script>
+</html>

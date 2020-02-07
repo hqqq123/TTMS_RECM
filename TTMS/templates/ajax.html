@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax练习</title>
+</head>
+<body>
+<div id="list">
+
+
+</div>
+<div id="more" class="center"><a class="warning">加载更多</a></div>
+</body>
+<script src="jquery-1.7.2.min.js"></script>
+<script>
+    var curpage = 0;
+    var flag=true;
+    var temp=0;
+    function createPage(curpage) {
+        $.ajax({
+            url: 'https://a.huodong.mi.com/flashsale/getslideshow',
+            type: 'get',
+            dataType: 'jsonp',
+            success: function (res) {
+                for(var i=0;i<res.data.list.list.length;i++){
+                    console.log(res.data.list.list[i]['goods_name'],res.data.list.list[i]['discount_img']);
+                    $('<div class="product-cell shadow"><img class="J_lazy" width="850" height="450" style="background-color:#EEEEEE;" src="'+res.data.list.list[i]['discount_img']+'"><p class="title">'+res.data.list.list[i]['goods_name']+'</p> </div>').appendTo("#list")
+
+                }
+                flag=true
+
+            }
+
+
+        })
+    }
+    createPage(0);
+    function loadMore(){
+        $(window).scroll(function () {
+            if ($(document).scrollTop()+$(window).height()+50>=$(document).height()&&flag){
+                flag=false;
+                createPage(0)
+            }
+        })
+    }
+    $(window).scroll(function () {
+            if ($(document).scrollTop()+$(window).height()+50>=$("#more").offset().top&&flag){
+                flag=false;
+                temp++;
+                if (temp>4) {
+                    return
+                }
+
+                createPage(0)
+            }
+    })
+
+
+</script>
+
+</html>

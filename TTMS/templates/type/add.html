@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}添加剧目类型{% endblock %}
+{% block bodytitle %}
+    <span class="glyphicon glyphicon-list">添加剧目类型</span>
+
+{% endblock %}
+{% block content %}
+    <hr>
+                      <form class="form-horizontal style-form" method="post" action="{% url 'type_add' %}">
+
+
+                            {% csrf_token %}
+
+
+                          <div class="form-group">
+                              <label  class="col-sm-2 col-sm-2 control-label">类型名称</label>
+                              <div class="col-sm-10">
+                                  <input type="text" name="name" class="form-control round-form">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="col-sm-10 col-lg-offset-2">
+                                  <input class="btn btn-default" type="submit" value="确认添加">
+                              </div>
+
+                          </div>
+
+
+                      </form>
+
+      <!--main content end-->
+
+{% endblock %}
