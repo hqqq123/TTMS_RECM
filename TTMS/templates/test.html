@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="main01.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<selection id="container">
+    <header class="header black-bg">
+        <!--logo start-->
+        <a href="index.html" class="logo"><b>剧院票务管理系统</b></a href="index.html">
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li><a class="logout" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+
+                <p class="centered"><a href="profile.html"><img src="/static/assets/img/ui-sam.jpg" class="img-circle"
+                                                                width="60"></a></p>
+                <h5 class="centered">{{ request.session.user }}</h5>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-user"></i>
+                        <span>用户管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'account_list' %}">查看用户</a></li>
+                        <li><a href=" {% url 'account_add' %}">添加用户</a></li>
+                        <li><a href="{% url 'account_pwd' %}">修改密码</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-desktop"></i>
+                        <span>票务管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'ticket_sale' %}">售票</a></li>
+                        <li><a href="buttons.html">Buttons</a></li>
+                        <li><a href="panels.html">Panels</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>订单管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'order_list' %}">订单列表</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-cogs"></i>
+                        <span>演出计划管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'schedule_add' %}">添加演出计划</a></li>
+                        <li><a href="{% url 'schedule_list' %}">演出计划列表</a></li>
+
+
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>剧目类型管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'type_list' %}">类型列表</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-tasks"></i>
+                        <span>剧目管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'play_add' %}">添加剧目</a></li>
+                        <li><a href="{% url 'play_list' %}">剧目列表</a></li>
+
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-th"></i>
+                        <span>演出厅管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'studio_add' %}"> 添加演出厅</a></li>
+                        <li><a href="{% url 'studio_list' %}">查看演出厅</a></li>
+
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-ban"></i>
+                        <span>权限管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'auth_add' %}">添加权限</a></li>
+                        <li><a href="{% url 'auth_list' %}">权限列表</a></li>
+
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-magnet"></i>
+                        <span>角色管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'role_add' %}">添加角色</a></li>
+                        <li><a href="{% url 'role_list' %}">角色列表</a></li>
+
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class=" fa fa-bar-chart-o"></i>
+                        <span>销售分析</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'analisis_sale' %}">销售分析</a></li>
+{#                        <li><a href="chartjs.html">Chartjs</a></li>#}
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+</selection>
+
+
+</body>
+</html>

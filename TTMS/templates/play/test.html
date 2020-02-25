@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.css" rel="stylesheet">
+
+    <style>
+        .ms-cont1, .ms-cont2, #read-more{
+            display: inline;
+        }
+        .ms-cont2 {
+            display: none;
+        }
+
+        .ms-cont2, .ms-cont1 {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="ms-cont1">民国时期，慕府大少爷慕卓远新婚前夕暴毙而亡，为告慰亡灵，丫鬟小蝶被配阴婚与慕卓远一同活埋，从此慕府死人事件频频发生，人心惶惶，不得安宁。慕府三小姐慕欣芸留洋归来，与男友宋清明一一解开慕府不为人知的惊天秘密。</div>
+
+
+<div class="ms-cont2">民国时期，慕府大少爷慕卓远新婚前夕暴毙而亡，为告慰亡灵，丫鬟小蝶被配阴婚与慕卓远一同活埋，从此慕府死人事件频频发生，人心惶惶，不得安宁。慕府三小姐慕欣芸留洋归来，与男友宋清明一一解开慕府不为人知的惊天秘密。</div>
+<div id="read-more"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+<script>
+
+    function cutString(str, len) {
+        //length属性读出来的汉字长度为1
+        if (str.length * 2 <= len) {
+            return str;
+        }
+        var strlen = 0;
+        var s = "";
+        for (var i = 0; i < str.length; i++) {
+            s = s + str.charAt(i);
+            if (str.charCodeAt(i) > 128) {
+                strlen = strlen + 2;
+                if (strlen >= len) {
+                    $('#read-more').append('<a href="#">点击查看更多</a>');
+
+                    return s.substring(0, s.length - 1) + "...";
+                }
+            } else {
+                strlen = strlen + 1;
+                if (strlen >= len) {
+                    $('#read-more').append('<a href="#">收起</a>');
+                    return s.substring(0, s.length - 2) + "...";
+                }
+            }
+        }
+        return s;
+    }
+
+    //以上cutString方法借鉴参考了：http://www.jb51.net/article/91716.htm，万分感谢！
+    $(document).ready(function () {
+        var cont1 = $('.ms-cont1'),cont3 = $('#read-more'),
+            cont2 = $('.ms-cont2');
+
+        cont3.click(function () {
+            if($('#read-more a').text() == '收起') {
+                $(this).prev().hide();
+                $(this).prev().prev().show();
+                $('#read-more a').html('点击查看更多');
+
+            }
+            else{
+                $(this).prev().prev().hide();
+                $(this).prev().show();
+                $('#read-more a').html('收起');
+            }
+
+        });
+        cont1.each(function () {
+            var that = $(this), txt = that.text();
+// console.log(txt);
+            that.text(cutString(txt, 30));
+        })
+    })
+</script>
+
+</html>

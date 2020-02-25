@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block title %}剧目列表{% endblock %}
+{% block bodytitle %}
+    <span class="glyphicon glyphicon-list">搜索结果</span>
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="col-lg-offset-6">
+            <form class="navbar-form navbar-left" method="get" action="{% url 'play_search' %}">
+                <div class="form-group" >
+                      <input type="text" name="search" class="form-control" placeholder="Search">
+                </div>
+                <input type="submit" class="btn btn-default"></input>
+            </form>
+        </div>
+    </div>
+                          <table class="table table-hover">
+                              <tr>
+                                  <th><i class="fa fa-bullhorn"></i> 片名</th>
+                                  <th><i class="fa fa-question-circle"></i> 主演</th>
+                                  <th><i class="fa fa-bookmark"></i> 导演</th>
+                                  <th><i class=" fa fa-edit"></i> 片长</th>
+                                  <th><i class=" fa fa-edit"></i> 上映时间</th>
+{#                                  <th><i class=" fa fa-edit"></i> 主演</th>#}
+                                  <th class="hidden-phone"><i class="fa fa-question-circle"></i> 评分</th>
+                                  <th><i class=" fa fa-edit"></i> 状态</th>
+
+                                  <th></th>
+                              </tr>
+                              {% for play in plays %}
+                              <tr>
+                                  <td><a href="#">&nbsp;{{ play.name }}</a></td>
+                                  <td>{{ play.actors }} </td>
+                                  
+                                  <td>{{ play.director }} </td>
+                                  <td>{{ play.length }} 分钟 </td>
+                                  <td>{{ play.play_time.year }}--{{ play.play_time.month }}--{{ play.play_time.day }} </td>
+                                  <td class="hidden-phone"><span class="label label-info">{{ play.score }}</span></td>
+                                  {% if play.status == 1 %}
+                                      <td>正在热映 </td>
+                                  {% else %}
+                                      <td>已下架 </td>
+                                  {% endif %}
+                                  <td>
+{#                                      <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>#}
+                                      <a id="edit_play" href="{% url 'play_edit' play.id %}" class="btn btn-primary btn-xs">编辑</a>
+                                      {% if play.status == 1 %}
+                                            <a href="{% url 'play_delete' play.id %}" class="btn btn-warning btn-xs">下架</a>
+                                            <a href="{% url 'play_detail_sale' play.id %}" class="btn btn-danger btn-xs">购买</a>
+
+                                      {% else %}
+                                            <a href="{% url 'play_up' play.id %}" class="btn btn-warning btn-xs">上架</a>
+
+                                      {% endif %}
+
+
+                                      {% if play.id in likes %}
+                                          <a href="{% url 'play_like_cancel' play.id %}" class="btn btn-success btn-xs">
+                                              &nbsp;&nbsp;<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&nbsp;&nbsp;
+                                          </a>
+                                      {% else %}
+                                          <a href="{% url 'play_like' play.id %}" class="btn btn-success btn-xs">
+                                              &nbsp;&nbsp;<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>&nbsp;&nbsp;
+                                          </a>
+                                      {% endif %}
+
+                                  </td>
+                              </tr>
+                              {% endfor %}
+                          </table>
+
+
+
+{% endblock %}
+{% block page %}
+        <div class="col-lg-offset-2">
+                        <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                      {% if playsPageObj.has_previous %}
+                    <li >
+                      <a href="{% url 'play_list' %}?page={{ playsPageObj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                      {% else %}
+                    <li class="disabled">
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                      {% endif %}
+
+                      {% for page in playsPageObj.paginator.page_range %}
+                          {% if page == playsPageObj.number %}
+                          <li class="active"><a href="{% url 'play_list' %}?page={{ page }}">{{ page}}</a></li>
+                          {% else %}
+                          <li><a href="{% url 'play_list' %}?page={{ page }}">{{ page}}</a></li>
+                          {% endif %}
+                      {% endfor %}
+
+                    {% if playsPageObj.has_next %}
+                    <li>
+                      <a href="{% url 'play_list' %}?page={{ playsPageObj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+        </div>
+{% endblock %}
+{#{% block script %}#}
+{#    <script>#}
+{##}
+{#    function cutString(str, len) {#}
+{#        //length属性读出来的汉字长度为1#}
+{#        if (str.length * 2 <= len) {#}
+{#            return str;#}
+{#        }#}
+{#        var strlen = 0;#}
+{#        var s = "";#}
+{#        for (var i = 0; i < str.length; i++) {#}
+{#            s = s + str.charAt(i);#}
+{#            if (str.charCodeAt(i) > 128) {#}
+{#                strlen = strlen + 2;#}
+{#                if (strlen >= len) {#}
+{#                    $('#read-more').append('<a href="#">点击查看更多</a>');#}
+{##}
+{#                    return s.substring(0, s.length - 1);#}
+{#                }#}
+{#            } else {#}
+{#                strlen = strlen + 1;#}
+{#                if (strlen >= len) {#}
+{#                    $('#read-more').append('<a href="#">点击查看更多</a>');#}
+{#                    return s.substring(0, s.length - 2);#}
+{#                }#}
+{#            }#}
+{#        }#}
+{#        return s;#}
+{#    }#}
+{##}
+{#    //以上cutString方法借鉴参考了：http://www.jb51.net/article/91716.htm，万分感谢！#}
+{#    $(document).ready(function () {#}
+{#        var cont1 = $('.name_1'),cont3 = $('#read-more'),#}
+{#            cont2 = $('.name_2');#}
+{##}
+{#        cont3.click(function () {#}
+{#            if($('#read-more a').text() == '收起') {#}
+{#                $(this).prev().hide();#}
+{#                $(this).prev().prev().show();#}
+{#                $('#read-more a').html('点击查看更多');#}
+{##}
+{#            }#}
+{#            else{#}
+{#                $(this).prev().prev().hide();#}
+{#                $(this).prev().show();#}
+{#                $('#read-more a').html('收起');#}
+{#            }#}
+{##}
+{#        });#}
+{#        cont1.each(function () {#}
+{#            var that = $(this), txt = that.text();#}
+{#// console.log(txt);#}
+{#            that.text(cutString(txt, 30));#}
+{#        })#}
+{#    })#}
+{#</script>#}
+{##}
+{#{% endblock %}#}

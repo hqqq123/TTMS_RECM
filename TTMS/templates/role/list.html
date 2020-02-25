@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}角色列表{% endblock %}
+{% block bodytitle %}
+    <span class="glyphicon glyphicon-list">查看角色</span>
+
+{% endblock %}
+{% block content %}
+                          <table class="table table-hover" >
+                              <tr>
+                                  <th style="white-space: nowrap"><i class="fa fa-bullhorn"></i> 编号</th>
+
+                                  <th style="white-space: nowrap"><i class="fa fa-bullhorn"></i> 角色</th>
+{#                                  <th><i class=" fa fa-edit"></i> 主演</th>#}
+                                  <th class="hidden-phone"><i class="fa fa-question-circle"></i> 可执行权限</th>
+
+                                  <th></th>
+                              </tr>
+                              {% for role in roles %}
+                              <tr>
+                                  <td style="white-space: nowrap"><a href="#">&nbsp;{{ role.id }}</a></td>
+                                  <td style="white-space: nowrap">{{ role.name}} </td>
+
+                                  <td class="hidden-phone">
+                                      {% for auth in role.auths.all %}
+                                          <a href="{% url 'auth_list' %}"><span class="label label-info">{{ auth.name }}</span></a>
+                                      {% endfor %}
+
+                                  </td>
+                                  <td>
+{#                                      <a href="" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>#}
+                                      <a href="{% url 'role_edit' role.id %}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                      <a href="{% url 'role_delete' role.id %}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                  </td>
+                              </tr>
+                              {% endfor %}
+                          </table>
+{% endblock %}
+{% block page %}
+        <div class="col-lg-offset-2">
+                            <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                      {% if rolesPageObj.has_previous %}
+                    <li >
+                      <a href="{% url 'role_list' %}?page={{ rolesPageObj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                      {% else %}
+                    <li class="disabled">
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                      {% endif %}
+
+                      {% for page in rolesPageObj.paginator.page_range %}
+                          {% if page == rolesPageObj.number %}
+                          <li class="active"><a href="{% url 'role_list' %}?page={{ page }}">{{ page}}</a></li>
+                          {% else %}
+                          <li><a href="{% url 'role_list' %}?page={{ page }}">{{ page}}</a></li>
+                          {% endif %}
+                      {% endfor %}
+
+                    {% if rolesPageObj.has_next %}
+                    <li>
+                      <a href="{% url 'role_list' %}?page={{ rolesPageObj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+
+        </div>
+{% endblock %}
