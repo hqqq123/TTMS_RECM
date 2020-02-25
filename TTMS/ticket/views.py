@@ -94,10 +94,10 @@ def buy(request, id):
             order.schedule = schedule
             order.account = account
 
-            # order.save()
+            order.save()
 
             for seat in seats:
-                if seat.status:
+                if seat.order_set.all():
                     if seat.order_set.filter(schedule=schedule):
                         # print('=-=---===========================')
                         transaction.savepoint_rollback(save_id)
@@ -106,8 +106,9 @@ def buy(request, id):
                         messages.info(request, "您选的座位已被购买，请重选！")
                         return redirect(reverse('ticket_seat', args=(schedule.id,)))
 
-                seat.status = True
+                # seat.status = True
                 seat.save()
+
 
                 schedule.ticket_counts -= 1
                 schedule.save()
