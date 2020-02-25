@@ -1,4 +1,3 @@
-
 from django.db import models
 
 # Create your models here.
@@ -21,4 +20,3 @@ class Schedule(models.Model):
     status = models.IntegerField(default=1)  # 1:正在上映，0：已下架
 
     # order=models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
-
