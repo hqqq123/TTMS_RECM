@@ -76,36 +76,27 @@
                 {% for col in row %}
                     var img=document.createElement("img");
 
-                    {% if col.status %}
-                        {#var schedule={{ schedule }};#}
-                        {#var ticket=col.ticket_set.filter(schedule=schedule);#}
-                        {#alert(ticket);#}
-                        {#{% if ticket %}#}
-                        {#    img.src="/static/img/sale.png";#}
-                        {#{% else %}#}
-                        {#    img.src="/static/img/enable.png";#}
-                        {#{% endif %}#}
+                    {% if col.order_set.all %}
+                    // alert('111')
+                    // alert('{{col.order_set.all}}');
+                        {% for order in col.order_set.all %}
+                            // alert('{{order.schedule.id}}+{{schedule.id}}');
+                            {% if order.schedule.id == schedule.id %}
 
-                        {% for ticket in col.ticket_set.all %}
-                            {#alert("{{ col.id }}+{{ ticket.schedule.id }}+{{ schedule.id }}");#}
-                            {% if ticket.schedule.id == schedule.id %}
-                                {#alert("{{ col.id }}");#}
                                 img.src="/static/img/sale.png";
-{#                                {{ forloop.last }}=True;#}
+                                // break;
+                                {{ "<!--" }}
 
                             {% else %}
-                                if(img.src=="http://127.0.0.1:8000/static/img/sale.png"){
 
-                                }else {
-                                    {#alert(img.src);#}
                                     img.src="/static/img/enable.png";
-                                }
 
                             {% endif %}
-
                         {% endfor %}
+                        {{ "-->" }}
 
                     {% else %}
+                        // alert("111");
                         img.src="/static/img/enable.png";
                         var div=document.getElementById("show_seats");
                     {% endif %}
